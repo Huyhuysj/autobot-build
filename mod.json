@@ -1,0 +1,18 @@
+{
+    "geode": "3.0.0",
+    "version": "v1.0.0",
+    "id": "com.example.autobot",
+    "name": "AutoBot",
+    "developer": "YourName",
+    "description": "Bot AI tự động nhảy qua chướng ngại vật trên iOS.",
+    "resources": {},
+    "settings": {
+        "enabled": {
+            "type": "bool",
+            "default": false,
+            "name": "Bật Auto-Bot",
+            "description": "Bật tắt bot tự động chơi"
+        }
+    },
+    "platforms": ["ios"]
+}

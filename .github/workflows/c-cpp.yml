@@ -1,0 +1,22 @@
+name: Build iOS Geode Mod
+on:
+  push:
+    branches: [main]
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Geode CLI
+        run: |
+          curl -L -o geode.zip https://github.com/geode-sdk/cli/releases/latest/download/geode-macos-arm64.zip
+          unzip geode.zip -d geode_bin
+          chmod +x geode_bin/geode
+          sudo mv geode_bin/geode /usr/local/bin/
+      - name: Build mod
+        run: geode build --platform ios
+      - name: Upload .geode artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: AutoBot-iOS.geode
+          path: build/**/*.geode
