@@ -1,36 +1,25 @@
 name: Build iOS Geode Mod
-
 on:
   push:
     branches: [main]
-  workflow_dispatch:   # cho phép chạy thủ công nếu cần
-
+  workflow_dispatch:
 jobs:
   build:
     runs-on: macos-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Install Geode CLI
+      - name: Install Geode CLI (v3.11.1)
         run: |
-          # Tải bản Geode CLI 3.11.1 cho macOS ARM (định dạng .tar.gz)
           curl -L -o geode.tar.gz https://github.com/geode-sdk/cli/releases/download/v3.11.1/geode-v3.11.1-macos-arm64.tar.gz
-          # Giải nén file tar.gz
           tar -xzf geode.tar.gz
-          # Tự động tìm file thực thi "geode" trong thư mục vừa giải nén
           BIN_PATH=$(find . -name geode -type f | head -1)
-          echo "Tìm thấy geode ở: $BIN_PATH"
           chmod +x "$BIN_PATH"
           sudo mv "$BIN_PATH" /usr/local/bin/geode
-          # Kiểm tra phiên bản đã cài
           geode --version
-
       - name: Build mod
-        run: |
-          geode build --platform ios
-
-      - name: Upload .geode artifact
+        run: geode build --platform ios
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: AutoBot-iOS.geode
